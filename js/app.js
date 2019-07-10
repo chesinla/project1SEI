@@ -42,56 +42,34 @@ const numOrder = [
     {num:34, color:'red'},
 ];
 
-/*----- app's state (variables) -----*/ 
-
-/*----- cached element references -----*/ 
-
-/*----- event listeners -----*/ 
-
-/*----- functions -----*/
-
-
-class rouletteBoard {
-    constructor(game) {
-        this.selection = selection;
-        this.bet = bet;
-        this.payout = payout;
-        this.chips = chips
-    };
-}
+// class rouletteBoard {
+//     constructor(game) {
+//         this.selection = selection;
+//         this.bet = bet;
+//         this.payout = payout;
+//         this.chips = chips
+//     };
+// };
 
 class Player {
     constructor() {
         this.bets = []
         this.money = 100
     }
-}
-
-
-
-
- //creating a function that places the players bet(s) before they are able to select spin the wheel btn
-// const placeBets ={
-
-
-// }
+};
 
 const player = new Player()
 let vegasNum = null;
 
-document.querySelector('#spin-wheel').addEventListener('click', () => {
-    vegasNum = numOrder[Math.floor(Math.random() * numOrder.length)]
-    console.log(vegasNum)
-    betResults()
-})
+/*----- app's state (variables) -----*/ 
 
-// const player = {
-//     player: null,
-//     chips: 100,
-// }
-let placeBets = null
+let redBet = null;
+
+
+
+/*----- cached element references -----*/ 
+
 const board = document.querySelector('.board')
-
 const numbercontainer = document.querySelector('.number-container')
 const zerocontainer = document.querySelector('.zero-container')
 const zerodiv = document.createElement('div')
@@ -99,13 +77,68 @@ zerodiv.innerText = numOrder[0].num
 zerodiv.className = `green num`
 zerocontainer.append(zerodiv)
 
-
 for (let i = 1; i < numOrder.length; i++){
     const div = document.createElement('div')
     div.innerText = numOrder[i].num
     div.className = `${numOrder[i].color} num ${numOrder[i].num}`
     numbercontainer.append(div)
+};
+
+
+const text = ["1-18", "EVEN", "<span class='red-diamond'>&#9830;</span>", "<span class='black-diamond'>&#9830;</span>", "ODD", "19-36"]
+
+for(let i = 0; i < 6; i++) {
+    const div = document.createElement('div')
+    div.className = 'bottom-bet'
+    if(i === 2 || i === 3) {
+        div.innerHTML = text[i]
+    } else {
+        div.innerText = text[i]
+    }
+    // div.className = text[i]
+    numbercontainer.append(div)
+};
+
+/*----- event listeners -----*/ 
+
+document.querySelector('#spin-wheel').addEventListener('click', () => {
+    vegasNum = numOrder[Math.floor(Math.random() * numOrder.length)]
+    console.log(vegasNum)
+    betResults()
+});
+
+document.querySelector('.colors').addEventListener('click', event => {
+    console.log(event.target.innerText)
+    const color = event.target.innerText.toLowerCase()
+    if(player.bets.includes(color)){
+        return 
+    }
+player.bets.push(color)
+player.money -= 5
+
+})
+
+board.addEventListener('click', event => {
+    const num = Number(event.target.innerText)
+    if(player.bets.includes(num)) {
+        return 
+    }
+    player.bets.push(num)
+    player.money -= 5
+    console.log(player)
+    updateBets()
+    // placeBets = Number(event.target.innerText)
+    // console.log(placeBets)
+});
+
+function placeChip() {
+    for(let i = 0; i < player.bets.length; i++) {
+        const num = document.getElementsByClassName(`${player.bets[i]}`)
+        return num
+    }
 }
+
+/*----- functions -----*/
 
 makeRow()
 
@@ -125,70 +158,14 @@ function makeRow() {
         }
     }
 
-}
-
-
-
-const text = ["1-18", "EVEN", "<span class='red-diamond'>&#9830;</span>", "<span class='black-diamond'>&#9830;</span>", "ODD", "19-36"]
-
-
-for(let i = 0; i < 6; i++) {
-    const div = document.createElement('div')
-    div.className = 'bottom-bet'
-    if(i === 2 || i === 3) {
-        div.innerHTML = text[i]
-    } else {
-        div.innerText = text[i]
-    }
-    // div.className = text[i]
-    numbercontainer.append(div)
-}
-
-
-
-
-// document.querySelector('#place-bets').addEventListener('click', () => {
-//     placeBets = board.event;
-// })
+};
 
 function updateBets () {
     const betsDiv = document.querySelector('.bets')
     betsDiv.innerText = ''
     player.bets.forEach(e => betsDiv.innerText += ` ${e} `)
-}
+};
 
-let redBet = null;
-
-document.querySelector('.colors').addEventListener('click', event => {
-    console.log(event.target.innerText)
-    const color = event.target.innerText.toLowerCase()
-    if(player.bets.includes(color)){
-        return 
-    }
-player.bets.push(color)
-player.money -= 5
-
-// if(vegasNum.color.inlcudes('red'))
-
-})
-
-board.addEventListener('click', event => {
-    const num = Number(event.target.innerText)
-    if(player.bets.includes(num)) {
-        return 
-    }
-    player.bets.push(num)
-    player.money -= 5
-    console.log(player)
-    updateBets()
-    // placeBets = Number(event.target.innerText)
-    // console.log(placeBets)
-})
-
-
-
-
-//lines 87-92 are meant to produce the outcome of the bet in the console
 function betResults(){
     if (player.bets.includes(vegasNum.num)) {
         player.money += 35 * 5
@@ -203,14 +180,159 @@ function betResults(){
         player.bets = []
     }
     removeBets()
-}
+};
 
 function removeBets() {
     const nums = document.querySelectorAll('.active')
     nums.forEach(e => {
         console.log(e)
     })
-}
+};
+
+
+
+//------------------------------------------------------------------------------------------------------//
+//creating a function that places the players bet(s) before they are able to select spin the wheel btn
+// const placeBets ={
+
+
+// }
+
+// const player = new Player()
+// let vegasNum = null;
+
+// document.querySelector('#spin-wheel').addEventListener('click', () => {
+//     vegasNum = numOrder[Math.floor(Math.random() * numOrder.length)]
+//     console.log(vegasNum)
+//     betResults()
+// })
+
+// const player = {
+//     player: null,
+//     chips: 100,
+// }
+// let placeBets = null
+// const board = document.querySelector('.board')
+
+// const numbercontainer = document.querySelector('.number-container')
+// const zerocontainer = document.querySelector('.zero-container')
+// const zerodiv = document.createElement('div')
+// zerodiv.innerText = numOrder[0].num
+// zerodiv.className = `green num`
+// zerocontainer.append(zerodiv)
+
+
+// for (let i = 1; i < numOrder.length; i++){
+//     const div = document.createElement('div')
+//     div.innerText = numOrder[i].num
+//     div.className = `${numOrder[i].color} num ${numOrder[i].num}`
+//     numbercontainer.append(div)
+// }
+
+// makeRow()
+
+// function makeRow() {
+//     for(let i = 0; i < 4; i++) {
+//         const div = document.createElement('div')
+//         console.log(i)
+//         if(i === 3) {
+//             div.className = 'break'
+//             numbercontainer.append(div)
+//             return 
+//         } else {
+//             const text = i === 0 ? "1st 12" : i === 1 ? "2nd 12" : "3rd 12"
+//             div.className = 'bottom-bet'
+//             div.innerText = text
+//             numbercontainer.append(div)
+//         }
+//     }
+
+// }
+
+
+
+//const text = ["1-18", "EVEN", "<span class='red-diamond'>&#9830;</span>", "<span class='black-diamond'>&#9830;</span>", "ODD", "19-36"]
+
+
+// for(let i = 0; i < 6; i++) {
+//     const div = document.createElement('div')
+//     div.className = 'bottom-bet'
+//     if(i === 2 || i === 3) {
+//         div.innerHTML = text[i]
+//     } else {
+//         div.innerText = text[i]
+//     }
+//     // div.className = text[i]
+//     numbercontainer.append(div)
+// }
+
+
+
+
+// document.querySelector('#place-bets').addEventListener('click', () => {
+//     placeBets = board.event;
+// })
+
+// function updateBets () {
+//     const betsDiv = document.querySelector('.bets')
+//     betsDiv.innerText = ''
+//     player.bets.forEach(e => betsDiv.innerText += ` ${e} `)
+// }
+
+//let redBet = null;
+
+// document.querySelector('.colors').addEventListener('click', event => {
+//     console.log(event.target.innerText)
+//     const color = event.target.innerText.toLowerCase()
+//     if(player.bets.includes(color)){
+//         return 
+//     }
+// player.bets.push(color)
+// player.money -= 5
+
+// if(vegasNum.color.inlcudes('red'))
+
+// })
+
+// board.addEventListener('click', event => {
+//     const num = Number(event.target.innerText)
+//     if(player.bets.includes(num)) {
+//         return 
+//     }
+//     player.bets.push(num)
+//     player.money -= 5
+//     console.log(player)
+//     updateBets()
+//     // placeBets = Number(event.target.innerText)
+//     // console.log(placeBets)
+// })
+
+
+
+
+//lines 87-92 are meant to produce the outcome of the bet in the console
+// function betResults(){
+//     if (player.bets.includes(vegasNum.num)) {
+//         player.money += 35 * 5
+//         player.bets = []
+//         console.log("You are a winner!!!")
+//     } else if(player.bets.includes(vegasNum.color)) {
+//         player.money += 2 * 5
+//         player.bets = []
+//         console.log("You are a winner!!")
+//     } else {
+//         console.log("Sorry, better luck next time.")
+//         player.bets = []
+//     }
+//     removeBets()
+// }
+
+// function removeBets() {
+//     const nums = document.querySelectorAll('.active')
+//     nums.forEach(e => {
+//         console.log(e)
+//     })
+// }
 
 
 
@@ -223,16 +345,5 @@ function removeBets() {
 //     board.append(div)
 // })
 
-
-
-
-
-
-
-
-
 // either map out game to show a roulette wheel spinning with ball
 // or have the numbers in order shown 1 at a time as the wheel spins
-
-
-
