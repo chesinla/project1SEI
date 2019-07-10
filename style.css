@@ -1,0 +1,114 @@
+
+h1 {
+    color: lightcyan;
+
+}
+
+
+.num.green {
+    background-color: green;
+    color: white;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.black {
+    background-color: black;
+    color: white;   
+}
+
+.red {
+    background-color: red;
+    color: white;   
+}
+
+.num {
+    width: 90px;
+    height: 80px;
+    cursor: pointer;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2rem;
+}
+
+.board{
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.number-container {
+    /* grid-column: 3 / span 3; */
+    display: flex;
+    flex-wrap: wrap;
+    width: 1110px;
+}
+
+div.rouletteboard {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+body {
+    background-image: url(https://www.medialivecasino.com/wp-content/uploads/rl-perla-01.jpg);
+    background-size: cover;
+    text-align: center;
+}
+.zero-container {
+    display: flex;
+
+}
+.red-bet {
+    background-color: red;
+}
+
+.active {
+    background-color: yellow;
+}
+
+.player-info {
+    border: 1px solid white;
+    color: white;
+    max-width: 560px;
+    margin-left: auto;
+    height: 10rem;
+    text-align: left;
+    background-color: black;
+}
+
+.bottom-bet {
+    flex-grow: 1;
+    width: 90px;
+    height: 80px;
+    background-color: green;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2rem;
+    color: white;
+}
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.red-diamond {
+    color: red;
+    transform: rotate(90deg);
+    font-size: 7rem;
+}
+
+.black-diamond {
+    color: black;
+    transform: rotate(90deg);
+    font-size: 7rem;
+}
