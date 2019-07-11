@@ -66,6 +66,8 @@ let vegasNum = null;
 let redBet = null;
 
 
+let pastNumbers =[]
+
 
 /*----- cached element references -----*/ 
 
@@ -104,7 +106,9 @@ for(let i = 0; i < 6; i++) {
 document.querySelector('#spin-wheel').addEventListener('click', () => {
     vegasNum = numOrder[Math.floor(Math.random() * numOrder.length)]
     console.log(vegasNum)
+    pastNumbers.push(vegasNum.num)
     betResults()
+    logHistory()
 });
 
 document.querySelector('.colors').addEventListener('click', event => {
@@ -189,6 +193,12 @@ function removeBets() {
     })
 };
 
+function logHistory() {
+    const numHistory = document.querySelector('#num-history')
+    numHistory.innerText = 'History: '
+    pastNumbers.forEach((pastNumber)=>{numHistory.innerText += ` ${pastNumber}`})
+        
+}
 
 
 //------------------------------------------------------------------------------------------------------//
