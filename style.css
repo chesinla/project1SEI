@@ -94,6 +94,7 @@ body {
     flex-direction: column;
     font-size: 2rem;
     color: white;
+    cursor: pointer;
 }
 
 .break {

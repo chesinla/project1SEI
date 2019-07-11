@@ -90,7 +90,7 @@ for (let i = 1; i < numOrder.length; i++){
 };
 
 makeRow()
-const text = ["1-18", "EVEN", "<span class='red-diamond'>&#9830;</span>", "<span class='black-diamond'>&#9830;</span>", "ODD", "19-36"]
+const text = ["1-18", "EVEN", "<span class='diamond red-diamond'>&#9830;</span>", "<span class='diamond black-diamond'>&#9830;</span>", "ODD", "19-36"]
 
 for(let i = 0; i < 6; i++) {
     const div = document.createElement('div')
@@ -108,6 +108,13 @@ for(let i = 0; i < 6; i++) {
 
 
 /*----- event listeners -----*/ 
+let diamonds = document.querySelectorAll(".diamond")
+for(let i = 0; i <diamonds.length;i++){
+    diamonds[i].addEventListener("click", (e)=>{
+        console.log(e.target.classList[1].split("-")[0], "from diamonds event")
+        player.bets.push(e.target.classList[1].split("-")[0])
+    })
+}
 
 document.querySelector('#spin-wheel').addEventListener('click', () => {
     vegasNum = numOrder[Math.floor(Math.random() * numOrder.length)]
@@ -180,33 +187,51 @@ function updateBets () {
 };
 
 function betResults(){
+    let wn = vegasNum.num
     player.bets.forEach((b,index)=>{
-        // if(!isNaN(b)){
-        //     if(parseInt(b) === vegasNum.num){
-        //         player.money += 35 * 5
-        //     }
-        // } else if (b.length === 6) {
-        //     if (b === "1st 12")
-        //     player.money += 3 * 5
-        // } else if (b === "EVEN" || b === "ODD"){
-        //     player.money += 2 * 5
-        // } else if (b === "1-18" || b === "19-36"){
-        //     player.money += 2 * 5
-        // } else { 
-        //     player.money += 2 * 5
-        // }
-        if (player.bets.includes(vegasNum.num)) {
-            player.money += 35 * 5
-            player.bets = []
-            console.log("You are a winner!!!")
-        } else if(player.bets.includes(vegasNum.color)) {
-            player.money += 2 * 5
-            player.bets = []
-            console.log("You are a winner!!")
-        } else {
-            console.log("Sorry, better luck next time.")
-            player.bets = []
+        if(!isNaN(b)){
+            if(parseInt(b) === vegasNum.num){
+                player.money += 35 * 5
+            }
+        } else if (b.length === 6) {
+            if (b === "1st 12" && wn <= 12 && wn !== 0){
+                player.money += 3 * 5
+            } else if (b === "2nd 12" && wn > 12 && wn <= 24){
+                player.money += 3 * 5
+            } else if (b === "3rd 12" && wn > 24 && wn <= 36){
+                player.money += 3 * 5
+            }
+        } else if (b === "EVEN" || b === "ODD"){
+            if (b === "EVEN" && wn%2 === 0){
+                player.money += 2 * 5
+            } else if (b === "ODD" && wn%2 !== 0){
+                player.money += 3 * 5
+            }
+        } else if (b === "1-18" || b === "19-36"){
+            if (b === "1-18" && wn > 1 && wn < 18){
+                player.money += 2 * 5
+            } else if (b === "19-36" && wn > 19 && wn < 36) {
+                player.money += 2 * 5
+            }
+        } else if (b === "red" || b === "black"){
+            if (b === "red" && vegasNum.color === 'red'){
+                player.money += 2 * 5
+            } else if (b === "black" && vegasNum.color === 'black'){
+                player.money += 2 * 5
+            }
         }
+        // if (player.bets.includes(vegasNum.num)) {
+        //     player.money += 35 * 5
+        //     player.bets = []
+        //     console.log("You are a winner!!!")
+        // } else if(player.bets.includes(vegasNum.color)) {
+        //     player.money += 2 * 5
+        //     player.bets = []
+        //     console.log("You are a winner!!")
+        // } else {
+        //     console.log("Sorry, better luck next time.")
+        //     player.bets = []
+        // }
     })
     player.bets= []
     updateChips()
