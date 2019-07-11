@@ -68,6 +68,9 @@ let redBet = null;
 
 let pastNumbers =[]
 
+let playerName = prompt("Lets play some ROULETTE!!! Please enter your name", "Roullete Rob");
+const nameOfPlayer = document.querySelector('#player-name')
+nameOfPlayer.innerText = `Name: ${playerName}`
 
 /*----- cached element references -----*/ 
 
@@ -86,7 +89,7 @@ for (let i = 1; i < numOrder.length; i++){
     numbercontainer.append(div)
 };
 
-
+makeRow()
 const text = ["1-18", "EVEN", "<span class='red-diamond'>&#9830;</span>", "<span class='black-diamond'>&#9830;</span>", "ODD", "19-36"]
 
 for(let i = 0; i < 6; i++) {
@@ -100,6 +103,9 @@ for(let i = 0; i < 6; i++) {
     // div.className = text[i]
     numbercontainer.append(div)
 };
+
+
+
 
 /*----- event listeners -----*/ 
 
@@ -130,7 +136,8 @@ board.addEventListener('click', event => {
     player.bets.push(num)
     player.money -= 5
     console.log(player)
-    updateBets()
+    // updateBets()
+    updateChips()
     // placeBets = Number(event.target.innerText)
     // console.log(placeBets)
 });
@@ -144,7 +151,7 @@ function placeChip() {
 
 /*----- functions -----*/
 
-makeRow()
+
 
 function makeRow() {
     for(let i = 0; i < 4; i++) {
@@ -183,6 +190,7 @@ function betResults(){
         console.log("Sorry, better luck next time.")
         player.bets = []
     }
+    updateChips()
     removeBets()
 };
 
@@ -198,6 +206,12 @@ function logHistory() {
     numHistory.innerText = 'History: '
     pastNumbers.forEach((pastNumber)=>{numHistory.innerText += ` ${pastNumber}`})
         
+}
+
+function updateChips() {
+    const chipCount = document.querySelector('#chip-count')
+    chipCount.innerText = `Chip Count: ${player.money}`
+
 }
 
 
