@@ -17,3 +17,4 @@ CSS
 Javascript
 
 
+<img src= "screen-shot.png">
