@@ -42,14 +42,6 @@ const numOrder = [
     {num:34, color:'red'},
 ];
 
-// class rouletteBoard {
-//     constructor(game) {
-//         this.selection = selection;
-//         this.bet = bet;
-//         this.payout = payout;
-//         this.chips = chips
-//     };
-// };
 
 class Player {
     constructor() {
@@ -105,8 +97,6 @@ for(let i = 0; i < 6; i++) {
 };
 
 
-
-
 /*----- event listeners -----*/ 
 let diamonds = document.querySelectorAll(".diamond")
 for(let i = 0; i <diamonds.length;i++){
@@ -143,7 +133,7 @@ board.addEventListener('click', event => {
     player.bets.push(num)
     player.money -= 5
     console.log(player)
-    // updateBets()
+    updateBets()
     updateChips()
     // placeBets = Number(event.target.innerText)
     // console.log(placeBets)
@@ -181,8 +171,8 @@ function makeRow() {
 };
 
 function updateBets () {
-    const betsDiv = document.querySelector('.bets')
-    betsDiv.innerText = ''
+    const betsDiv = document.querySelector('#current-bets')
+    betsDiv.innerText = "Current Bets: "
     player.bets.forEach(e => betsDiv.innerText += ` ${e} `)
 };
 
@@ -205,7 +195,7 @@ function betResults(){
             if (b === "EVEN" && wn%2 === 0){
                 player.money += 2 * 5
             } else if (b === "ODD" && wn%2 !== 0){
-                player.money += 3 * 5
+                player.money += 2 * 5
             }
         } else if (b === "1-18" || b === "19-36"){
             if (b === "1-18" && wn > 1 && wn < 18){
@@ -257,6 +247,7 @@ function updateChips() {
     chipCount.innerText = `Chip Count: ${player.money}`
 
 }
+
 
 
 //------------------------------------------------------------------------------------------------------//
