@@ -4,7 +4,7 @@ For my game project I decided to create European Roulette. Roulette is a game of
 
 ## Deployement Link
 
-
+https://git.generalassemb.ly/WebDev-Connected-Classroom/blog-autumn-sweaters.git
 
 ## Instructions
 The player starts with a money value of 100 chips. Bets are made in increments of 5. The game only allows for a maximum of a single 5-chip bet on any single bet. Use the cursor to place the bets you would like, tracking the players money in the bottom right corner. There is no real end game, the player can continue to win & lose enjoying the thrill of casino style roulette.
